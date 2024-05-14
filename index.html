@@ -42,6 +42,9 @@
 
             fetch('https://api.github.com/users/sumioshi')
                 .then(function(res){
+                    if (!res.ok) {
+                        throw new Error(`Falha na requisição: ${res.status}`);
+                    }
                     return res.json();
                 })
                 .then(function(json){
@@ -52,6 +55,9 @@
                     followersElement.textContent = json.followers;
                     reposElement.innerText = json.public_repos
                     linkElement.href = json.html_url;
+                })
+                .catch(function(error){
+                    console.error('Erro:', error.message)
                 })
         });
     </script>
